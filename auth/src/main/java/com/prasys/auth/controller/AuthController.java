@@ -1,9 +1,9 @@
 package com.prasys.auth.controller;
 
-import com.prasys.auth.JwtUtil;
-import com.prasys.auth.MyUserDetailsService;
-import com.prasys.framework.entity.AuthRequest;
-import com.prasys.framework.entity.LoginResponse;
+import com.prasys.auth.util.JwtUtil;
+import com.prasys.auth.service.MyUserDetailsService;
+import com.prasys.framework.dto.AuthRequest;
+import com.prasys.framework.dto.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("v1")
 public class AuthController {
     @Autowired
-   private JwtUtil jwtUtil;
+    private JwtUtil jwtUtil;
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
     private MyUserDetailsService myUserDetailsService;
 
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST )
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
 
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthRequest authRequest) throws Exception {
         final UserDetails userDetails = myUserDetailsService
@@ -39,10 +39,14 @@ public class AuthController {
         }
 
         final String jwt = jwtUtil.generateToken(userDetails);
-        LoginResponse loginResponse = new LoginResponse(jwt,"Bearer",MyUserDetailsService.authorities.toString());
+        LoginResponse loginResponse = new LoginResponse(jwt);
 
         return new ResponseEntity(loginResponse, HttpStatus.OK);
 
     }
-    
+
+    @RequestMapping(value = "/hello", method = RequestMethod.GET)
+    public ResponseEntity<?> hello() throws Exception {
+        return new ResponseEntity("hello", HttpStatus.OK);
+    }
 }

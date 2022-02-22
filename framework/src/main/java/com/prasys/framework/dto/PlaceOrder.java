@@ -1,4 +1,5 @@
-package com.prasys.framework.entity;
+package com.prasys.framework.dto;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +10,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthRequest {
-    private Long id;
-    private String userName;
-    private String password;
+public class PlaceOrder {
+
+    private Integer prId;
+    private Integer vendorId;
 }

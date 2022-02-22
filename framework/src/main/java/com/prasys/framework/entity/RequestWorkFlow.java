@@ -20,10 +20,11 @@ public class RequestWorkFlow {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false, name = "work_flow_id")
     public Long id;
-    private Long clientId;
+    private String clientId;
     private Long requestId;
     private Long approverId;
     private String status;
     private Date modifiedOn;
+    private Integer level;
 
 }

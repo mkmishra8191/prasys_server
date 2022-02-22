@@ -1,13 +1,16 @@
 package com.prasys.framework.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -15,7 +18,11 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties("hibernateLazyInitializer")
+
 @Table(name = "\"user\"", indexes = @Index(columnList = "id"))
+@FilterDef(name = "clientFilter", parameters = {@ParamDef(name = "clientId", type = "string")})
+@Filter(name = "clientFilter", condition = "client_id = :clientId")
 @Transactional
 public class User implements Serializable {
     @Id
@@ -27,7 +34,7 @@ public class User implements Serializable {
     private Date modifiedOn;
     private String createdBy;
     private String modifiedBy;
-    public Long clientId;
+    public String clientId;
     public Long memberId;
     public String userType;
     private String name;
@@ -47,6 +54,16 @@ public class User implements Serializable {
     @JoinTable(name = "user_roles",joinColumns = {@JoinColumn(name="id")},inverseJoinColumns = {@JoinColumn(name="role_id")})
     private  Set<Role> roles;
     private Long departmentId;
+
+    public static String getRoless(Set<Role> roles){
+
+        final String[] rolle = {""};
+
+        roles.forEach(role->{ rolle[0] +=  role.getName();});
+
+        return rolle[0];
+
+    }
 
 
 }

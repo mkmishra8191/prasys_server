@@ -1,4 +1,4 @@
-package com.prasys.auth;
+package com.prasys.auth.service;
 
 import com.prasys.framework.repo.UserRepo;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,13 +17,12 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserRepo userRepo;
-    public static com.prasys.framework.entity.User userr;
+    public static com.prasys.framework.entity.User user;
     public static Set authorities = new HashSet<>();
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        com.prasys.framework.entity.User  user = this.userRepo.findUserByEmail(username);
-        userr = user;
+        user = userRepo.findUserByEmail(username);
         if (user==null){
             throw  new UsernameNotFoundException("can not find user");
         }

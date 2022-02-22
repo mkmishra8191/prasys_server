@@ -26,11 +26,11 @@ public class PurchaseRequisition {
     private Date modifiedOn;
     private String createdBy;
     private String modifiedBy;
-    public Long clientId;
+    public String clientId;
     public Long memberId;
     public Long rTypeId;
-    @Embedded
-    @JoinColumn(name = "PurchaseOrder_ID")
+    @ElementCollection
+    @CollectionTable(name = "pr_items", joinColumns = @JoinColumn(name = "pr_id"), foreignKey = @ForeignKey(name = "pr_items_prs_fk"))
     private List<Item> items;
     @Column(columnDefinition = "varchar(255) default 'Initiated'")
     public  String  approvalStatus;

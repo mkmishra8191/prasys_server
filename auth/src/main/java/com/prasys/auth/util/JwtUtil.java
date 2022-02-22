@@ -1,5 +1,6 @@
-package com.prasys.auth;
+package com.prasys.auth.util;
 
+import com.prasys.auth.service.MyUserDetailsService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -39,7 +40,11 @@ public class JwtUtil {
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("roles", MyUserDetailsService.authorities);
-        return createToken(claims, userDetails.getUsername());
+        claims.put("memberId", MyUserDetailsService.user.getId());
+        claims.put("clientId", MyUserDetailsService.user.getClientId());
+
+
+        return createToken(claims, MyUserDetailsService.user.getEmail());
     }
 
     private String createToken(Map<String, Object> claims, String subject) {

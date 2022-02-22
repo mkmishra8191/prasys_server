@@ -9,7 +9,6 @@ import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -24,25 +23,17 @@ public class PurchaseOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String vendorId;
-    private Long clientId;
+    private String clientId;
     private Date createdOn;
     private Date modifiedOn;
     public Long memberId;
-    private String createdBy;
-    private String modifiedBy;
+    private Long createdBy;
+    private Long modifiedBy;
     @Embedded
     @JoinColumn(name = "PurchaseOrder_ID")
     private List<Item> items;
     @Column(columnDefinition = "varchar(255) default 'New'")
     private String status;
-    public String getRoles(Set<Role> roles){
 
-        final String[] rolle = {""};
-
-        roles.forEach(role->{ rolle[0] +=  role.getName();});
-
-        return rolle[0];
-
-    }
 
 }
